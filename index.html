@@ -76,7 +76,7 @@
   <script>
     function registrarClick(boton) {
       const ua = navigator.userAgent;
-      const origen = window.location.hostname;
+      const origen = "spark2";
       const url = "https://script.google.com/macros/s/AKfycbzusjso6SkzyHIKOMwz7Q_ovb5e37ZlAm32FgM5lraF4wBsil_9vVhTCiNcoT8Vfw84/exec";
       fetch(`${url}?boton=${boton}&ua=${encodeURIComponent(ua)}&origen=${origen}`);
     }
