@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VegasBett</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background-color: #37004b;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+    img {
+      max-width: 250px;
+    }
+    h1 {
+      font-size: 2rem;
+      color: #FFD700;
+    }
+    p {
+      font-size: 1.2rem;
+    }
+    .button {
+      display: block;
+      width: 80%;
+      max-width: 300px;
+      margin: 1rem auto;
+      padding: 1rem;
+      font-size: 1.2rem;
+      background-color: #FFD700;
+      color: #37004b;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+    footer {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+    }
+  </style>
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '1940802446747600');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1940802446747600&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+</head>
+<body>
+  <img src="logo.png" alt="Logo VegasBett" />
+  <h1>Bienvenido a VegasBett</h1>
+  <p>Obtené tu <strong>bono del 35%</strong> en tu primer depósito 🚀💰</p>
+
+  <a class="button" href="https://wa.me/5492235931148?text=Hola,%20ya%20hice%20mi%20primer%20dep%C3%B3sito%20y%20quiero%20mi%20bono%20del%2035%25%20%F0%9F%92%B0" onclick="registrarClick('ClickBono'); fbq('track', 'Purchase');">💰 Quiero mi bono</a>
+  <a class="button" href="https://wa.me/5492235931148?text=Quiero%20m%C3%A1s%20info" onclick="registrarClick('ClickInfo')">ℹ️ Quiero más info</a>
+  <a class="button" href="https://wa.me/5492233415879?text=Cargué%20mis%20fichas%20y%20paso%20el%20comprobante%20🧾%20y%20mi%20usuario%20👤:%20+54%20223%20341%205879" onclick="registrarClick('YaCargue')">✅ Ya hice mi carga</a>
+
+  <footer>
+    <p>Todos los derechos reservados Spark Publicidad</p>
+    <p>✅ Verificado por WhatsApp</p>
+  </footer>
+
+  <script>
+    function registrarClick(boton) {
+      const ua = navigator.userAgent;
+      const origen = window.location.hostname;
+      const url = "https://script.google.com/macros/s/AKfycbzusjso6SkzyHIKOMwz7Q_ovb5e37ZlAm32FgM5lraF4wBsil_9vVhTCiNcoT8Vfw84/exec";
+      fetch(`${url}?boton=${boton}&ua=${encodeURIComponent(ua)}&origen=${origen}`);
+    }
+  </script>
+</body>
+</html>
