@@ -1,48 +1,11 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VegasBett</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      background-color: #37004b;
-      color: white;
-      text-align: center;
-      padding: 2rem;
-    }
-    img {
-      max-width: 250px;
-    }
-    h1 {
-      font-size: 2rem;
-      color: #FFD700;
-    }
-    p {
-      font-size: 1.2rem;
-    }
-    .button {
-      display: block;
-      width: 80%;
-      max-width: 300px;
-      margin: 1rem auto;
-      padding: 1rem;
-      font-size: 1.2rem;
-      background-color: #FFD700;
-      color: #37004b;
-      text-decoration: none;
-      border-radius: 10px;
-      font-weight: bold;
-    }
-    footer {
-      margin-top: 2rem;
-      font-size: 0.8rem;
-    }
-  </style>
-
-  <!-- Meta Pixel Code -->
+  <title>VegasBett - Pixel + Conversion API</title>
   <script>
+    // Meta Pixel tradicional
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
     n.callMethod.apply(n,arguments):n.queue.push(arguments)};
@@ -56,37 +19,52 @@
   </script>
   <noscript>
     <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1940802446747600&ev=PageView&noscript=1"/>
+         src="https://www.facebook.com/tr?id=1940802446747600&ev=PageView&noscript=1"/>
   </noscript>
-  <!-- End Meta Pixel Code -->
 </head>
-<body>
-  <img src="logo.png" alt="Logo VegasBett" />
-  <h1>Bienvenido a VegasBett</h1>
-  <p>Obtené tu <strong>bono del 35%</strong> en tu primera carga.<br>¡Que la suerte esté de tu lado! 🎲✨</p>
+<body style="background:#1e0030; color:white; text-align:center; font-family:sans-serif">
+  <h1>🎰 ¡Bienvenido a VegasBett!</h1>
+  <p>Obtené tu bono del 35% al registrarte y hacer tu primer depósito</p>
 
-  <a class="button" href="https://wa.me/5492235931148?text=Hola,%20quiero%20mi%20BONO"
-     onclick="registrarClick('ClickBono'); fbq('track', 'Purchase', {value: 100.00, currency: 'ARS'});">💰 Quiero mi bono</a>
+  <a href="#" onclick="enviarEvento('ViewContent')" style="display:block;margin:20px;color:#FFD700;">👁️ Ver contenido</a>
+  <a href="https://wa.me/5492235931148?text=Hola,%20quiero%20mi%20BONO" onclick="enviarEvento('Lead')" class="boton">💰 Quiero mi bono</a>
+  <a href="https://wa.me/5492235931148?text=Quiero%20más%20info" onclick="enviarEvento('Contact')" class="boton">ℹ️ Quiero más info</a>
+  <a href="#" onclick="enviarEvento('Purchase')" class="boton">✅ Ya hice mi carga</a>
 
-  <a class="button" href="https://wa.me/5492235931148?text=Quiero%20más%20info"
-     onclick="registrarClick('ClickInfo'); fbq('track', 'Contact', {value: 100.00, currency: 'ARS'});">ℹ️ Quiero más info</a>
-
-  <a class="button" href="https://wa.me/5492233415879?text=Cargué%20mis%20fichas%20🚀%20Pasá%20el%20bono%20que%20ya%20quiero%20jugar%20🎲💰"
-     onclick="registrarClick('YaCargue'); fbq('track', 'Lead');">✅ Ya hice mi carga</a>
-
-  <footer>
-    <p>Todos los derechos reservados Spark Publicidad</p>
-    <p>✅ Verificado por WhatsApp</p>
-  </footer>
+  <style>
+    .boton {
+      display: block;
+      width: 80%%;
+      max-width: 300px;
+      margin: 1rem auto;
+      padding: 1rem;
+      font-size: 1.2rem;
+      background-color: #FFD700;
+      color: #1e0030;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+  </style>
 
   <script>
-    fbq('track', 'ViewContent');
+    function enviarEvento(eventName) {
+      fbq('track', eventName, {value: 100.00, currency: 'ARS'});
 
-    function registrarClick(boton) {
-      const ua = navigator.userAgent;
-      const origen = window.location.hostname;
-      const url = "https://script.google.com/macros/s/AKfycbzusjso6SkzyHIKOMwz7Q_ovb5e37ZlAm32FgM5lraF4wBsil_9vVhTCiNcoT8Vfw84/exec";
-      fetch(`${url}?boton=${boton}&ua=${encodeURIComponent(ua)}&origen=${origen}`);
+      const endpoint = "https://script.google.com/macros/s/AKfycbzusjso6SkzyHIKOMwz7Q_ovb5e37ZlAm32FgM5lraF4wBsil_9vVhTCiNcoT8Vfw84/exec";
+      const data = {
+        event: eventName,
+        pixel_id: "1940802446747600",
+        value: 100.00,
+        currency: "ARS",
+        source: "API",
+        ua: navigator.userAgent,
+        page: location.href
+      };
+
+      fetch(endpoint + "?" + new URLSearchParams(data))
+        .then(res => console.log("Evento enviado por API:", eventName))
+        .catch(err => console.error("Error enviando evento API", err));
     }
   </script>
 </body>
