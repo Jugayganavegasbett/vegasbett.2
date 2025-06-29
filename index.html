@@ -2,70 +2,80 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>VegasBett - Pixel + Conversion API</title>
+  <meta charset="UTF-8">
+  <title>VegasBett - Bono del 35%</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script>
-    // Meta Pixel tradicional
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
+    // Pixel Meta (colocar el que corresponda si hace falta)
+    !function(f,b,e,v,n,t,s){
+      if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)
+    }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1940802446747600');
     fbq('track', 'PageView');
-  </script>
-  <noscript>
-    <img height="1" width="1" style="display:none"
-         src="https://www.facebook.com/tr?id=1940802446747600&ev=PageView&noscript=1"/>
-  </noscript>
-</head>
-<body style="background:#1e0030; color:white; text-align:center; font-family:sans-serif">
-  <h1>🎰 ¡Bienvenido a VegasBett!</h1>
-  <p>Obtené tu bono del 35% al registrarte y hacer tu primer depósito</p>
 
-  <a href="#" onclick="enviarEvento('ViewContent')" style="display:block;margin:20px;color:#FFD700;">👁️ Ver contenido</a>
-  <a href="https://wa.me/5492235931148?text=Hola,%20quiero%20mi%20BONO" onclick="enviarEvento('Lead')" class="boton">💰 Quiero mi bono</a>
-  <a href="https://wa.me/5492235931148?text=Quiero%20más%20info" onclick="enviarEvento('Contact')" class="boton">ℹ️ Quiero más info</a>
-  <a href="#" onclick="enviarEvento('Purchase')" class="boton">✅ Ya hice mi carga</a>
-
-  <style>
-    .boton {
-      display: block;
-      width: 80%%;
-      max-width: 300px;
-      margin: 1rem auto;
-      padding: 1rem;
-      font-size: 1.2rem;
-      background-color: #FFD700;
-      color: #1e0030;
-      text-decoration: none;
-      border-radius: 10px;
-      font-weight: bold;
-    }
-  </style>
-
-  <script>
-    function enviarEvento(eventName) {
-      fbq('track', eventName, {value: 100.00, currency: 'ARS'});
-
-      const endpoint = "https://script.google.com/macros/s/AKfycbzusjso6SkzyHIKOMwz7Q_ovb5e37ZlAm32FgM5lraF4wBsil_9vVhTCiNcoT8Vfw84/exec";
+    function sendEvent(eventName) {
+      const endpoint = 'https://script.google.com/macros/s/AKfycbzyUts6KDgl2pQhM3jHRGQwSToKdy2TeVX0nExI9ZdnU3H8YMNlULAZqvb0ACsKOj3h/exec';
       const data = {
-        event: eventName,
-        pixel_id: "1940802446747600",
-        value: 100.00,
-        currency: "ARS",
-        source: "API",
-        ua: navigator.userAgent,
-        page: location.href
+        evento: eventName,
+        navegador: navigator.userAgent,
+        origen: window.location.href
       };
-
       fetch(endpoint + "?" + new URLSearchParams(data))
         .then(res => console.log("Evento enviado por API:", eventName))
         .catch(err => console.error("Error enviando evento API", err));
     }
   </script>
+  <style>
+    body {
+      background-color: #25003e;
+      color: white;
+      text-align: center;
+      font-family: sans-serif;
+      padding: 30px;
+    }
+    img {
+      max-width: 220px;
+      margin-bottom: 20px;
+    }
+    button {
+      background-color: gold;
+      color: black;
+      font-size: 1.3em;
+      padding: 15px 25px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      margin: 10px;
+    }
+    a {
+      color: gold;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <img src="logo.png" alt="VegasBett Logo" />
+  <h1>🎰 ¡Bienvenido a VegasBett!</h1>
+  <p>Obtené tu bono del 35% al registrarte y hacer tu primer depósito</p>
+
+  <p><a href="https://ganamos.biz" target="_blank" onclick="fbq('track', 'ViewContent'); sendEvent('ViewContent')">👁️ Ver contenido</a></p>
+
+  <button onclick="fbq('track', 'ClickBono'); sendEvent('ClickBono'); window.location.href='https://wa.link/ihv8fi';">
+    💰 Quiero mi bono
+  </button>
+  <br>
+  <button onclick="fbq('track', 'ClickInfo'); sendEvent('ClickInfo'); window.location.href='https://wa.link/ihv8fi';">
+    ℹ️ Quiero más info
+  </button>
+  <br>
+  <button onclick="fbq('track', 'Comprar', {value: 100.00, currency: 'ARS'}); sendEvent('Comprar'); window.location.href='https://wa.me/5492233415879?text=Hola!%20Ya%20hice%20mi%20dep%C3%B3sito%20y%20quiero%20empezar%20a%20jugar%20%F0%9F%8E%B2%F0%9F%92%B0';">
+    ✅ Ya hice mi carga
+  </button>
 </body>
 </html>
