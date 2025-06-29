@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,51 +6,94 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VegasBett</title>
   <style>
-    body { background-color: #1a0033; color: white; text-align: center; font-family: sans-serif; }
-    .logo { max-width: 200px; margin: 20px auto; }
-    .button { background-color: gold; color: black; padding: 20px; margin: 10px auto; font-size: 20px; border-radius: 10px; width: 300px; display: block; text-decoration: none; font-weight: bold; }
-    .ver { margin-bottom: 20px; display: inline-block; color: gold; text-decoration: underline; }
+    body {
+      font-family: sans-serif;
+      background-color: #37004b;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+    img {
+      max-width: 250px;
+    }
+    h1 {
+      font-size: 2rem;
+      color: #FFD700;
+    }
+    p {
+      font-size: 1.2rem;
+    }
+    .button {
+      display: block;
+      width: 80%;
+      max-width: 300px;
+      margin: 1rem auto;
+      padding: 1rem;
+      font-size: 1.2rem;
+      background-color: #FFD700;
+      color: #37004b;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+    footer {
+      margin-top: 2rem;
+      font-size: 0.8rem;
+    }
   </style>
 </head>
 <body>
-  <img src="logo.png" alt="Logo VegasBett" class="logo"/>
-  <h1>🎰 ¡Bienvenido a VegasBett!</h1>
-  <p>Obtené tu bono del 35% al registrarte y hacer tu primer depósito</p>
-  <a class="ver" href="https://ganamos.biz" target="_blank">👁️ Ver contenido</a>
+  <img src="logo.png" alt="Logo VegasBett" />
+  <h1>Bienvenido a VegasBett</h1>
+  <p>Obtené tu <strong>bono del 35%</strong> en tu primera carga.<br>¡Que la suerte esté de tu lado! 🎲✨</p>
 
-  <a class="button" href="https://wa.me/5492235931148?text=Hola,%20quiero%20mi%20bono" onclick="registrarEvento('ClickBono')">💰 Quiero mi bono</a>
-  <a class="button" href="https://wa.me/5492235931148?text=Hola,%20quiero%20más%20información" onclick="registrarEvento('ClickInfo')">ℹ️ Quiero más info</a>
-  <a class="button" href="https://wa.me/5492233415879?text=Ya%20hice%20mi%20carga,%20ahí%20envío%20el%20comprobante." onclick="registrarEvento('Comprar')">✅ Ya hice mi carga</a>
+  <a class="button" href="https://wa.me/5492235931148?text=Hola,%20quiero%20mi%20BONO" onclick="registrarClick('ClickBono')">💰 Quiero mi bono</a>
+  <a class="button" href="https://wa.me/5492235931148?text=Quiero%20más%20info" onclick="registrarClick('ClickInfo')">ℹ️ Quiero más info</a>
+  <a class="button" href="https://wa.me/5492233415879?text=Ya%20hice%20mi%20depósito%20y%20quiero%20mi%20bono%20del%2035%25%20🎰💸" onclick="registrarClick('YaCargue')">✅ Ya hice mi carga</a>
+
+  <footer>
+    <p>Todos los derechos reservados Spark Publicidad</p>
+  </footer>
 
   <script>
-    const token = "EAAKMYNrmVAABO73tbBVBV25i2W4WrWytknjUPmT1HoTTg8Vc9SFNUz39ZB52tcmiMkcVVWHSHZCPKEbNhgsWbn4qEEhtcJf5ZBp0ESrlCeyqYyDLiqaZAevcC75YciB1WM8vJszCGdimEHWj6Re8zlKHEIVHSbXs9JTY0RSo7YoD5Og0DcYuUYtC4mTUZAS9rqQZDZD";
-    const pixelId = "1940802446747600";
+    // Registro en Sheets
+    function registrarClick(boton) {
+      const ua = navigator.userAgent;
+      const origen = window.location.hostname;
+      const url = "https://script.google.com/macros/s/AKfycbzusjso6SkzyHIKOMwz7Q_ovb5e37ZlAm32FgM5lraF4wBsil_9vVhTCiNcoT8Vfw84/exec";
+      fetch(`${url}?boton=${boton}&ua=${encodeURIComponent(ua)}&origen=${origen}`)
+        .then(response => console.log("Registrado en Sheets"))
+        .catch(error => console.error("Error al registrar:", error));
+    }
 
-    function registrarEvento(evento) {
-      const url = "https://graph.facebook.com/v19.0/" + pixelId + "/events";
+    // Eventos de API Conversiones
+    const accessToken = "EAAKMYNrmVAABO4W1vV22UcDVW2OeOHZBqsAjyzxl8fd7kiq7QXzRvWyL7D4buNpxfIb8ZCHjx26ueZAjPZBYO4UMXSo1yKKGFZAZCl8iuVZC2V9IQw5qdj3hYZBKwMtpwz3begVlS413FzKPiEruKoXbmhP3XkH19SaRZBNTmfB0cnUW3IjtV4Jvsn3JEMcB4VDDfPAZDZD";
+    const pixelId = "1940802446747600";
+    const endpoint = `https://graph.facebook.com/v19.0/${pixelId}/events?access_token=${accessToken}`;
+
+    function enviarEvento(eventName) {
       const data = {
         data: JSON.stringify([{
-          event_name: evento,
+          event_name: eventName,
           event_time: Math.floor(Date.now() / 1000),
           action_source: "website",
           event_source_url: window.location.href,
-          user_data: {}
-        }]),
-        access_token: token
+          user_data: {
+            client_user_agent: navigator.userAgent
+          }
+        }])
       };
-
-      fetch(url + "?" + new URLSearchParams(data), { method: "POST" })
-        .then(() => console.log("Evento enviado por API:", evento))
-        .catch(err => console.error("Error enviando evento API", err));
-
-      // REGISTRO EN GOOGLE SHEETS
-      fetch("https://script.google.com/macros/s/AKfycbwnDbMdA_nUqMwUOgKSCV8Sg03RCU3hLnIjY-JjMTS6B7fb5OnNh1G5cGQnJdeZIdVC/exec", {
+      fetch(endpoint, {
         method: "POST",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ evento })
-      });
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+      })
+      .then(res => console.log("Evento API enviado:", eventName))
+      .catch(err => console.error("Error al enviar API:", err));
     }
+
+    // Eventos automáticos
+    enviarEvento("PageView");
   </script>
 </body>
 </html>
