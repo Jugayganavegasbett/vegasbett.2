@@ -6,95 +6,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VegasBett</title>
   <style>
-    body {
-      font-family: sans-serif;
-      background-color: #37004b;
-      color: white;
-      text-align: center;
-      padding: 2rem;
-    }
-    img {
-      max-width: 250px;
-    }
-    h1 {
-      font-size: 2rem;
-      color: #FFD700;
-    }
-    p {
-      font-size: 1.2rem;
-    }
-    .button {
-      display: block;
-      width: 80%;
-      max-width: 300px;
-      margin: 1rem auto;
-      padding: 1rem;
-      font-size: 1.2rem;
-      background-color: #FFD700;
-      color: #37004b;
-      text-decoration: none;
-      border-radius: 10px;
-      font-weight: bold;
-    }
-    footer {
-      margin-top: 2rem;
-      font-size: 0.8rem;
-    }
+    body { background: #23003a; color: white; text-align: center; font-family: sans-serif; }
+    button { background: gold; color: black; font-size: 20px; padding: 15px; margin: 10px; border: none; border-radius: 10px; cursor: pointer; display: block; width: 80%; max-width: 300px; margin: 10px auto; }
+    img { width: 200px; margin: 20px auto; display: block; }
+    a { color: gold; text-decoration: underline; }
   </style>
 </head>
 <body>
-  <img src="logo.png" alt="Logo VegasBett" />
-  <h1>Bienvenido a VegasBett</h1>
-  <p>Obtené tu <strong>bono del 35%</strong> en tu primera carga.<br>¡Que la suerte esté de tu lado! 🎲✨</p>
-
-  <a class="button" href="https://wa.me/5492235931148?text=Hola,%20quiero%20mi%20BONO" onclick="registrarClick('ClickBono')">💰 Quiero mi bono</a>
-  <a class="button" href="https://wa.me/5492235931148?text=Quiero%20más%20info" onclick="registrarClick('ClickInfo')">ℹ️ Quiero más info</a>
-  <a class="button" href="https://wa.me/5492233415879?text=Ya%20hice%20mi%20depósito%20y%20quiero%20mi%20bono%20del%2035%25%20🎰💸" onclick="registrarClick('YaCargue')">✅ Ya hice mi carga</a>
-
-  <footer>
-    <p>Todos los derechos reservados Spark Publicidad</p>
-  </footer>
+  <img src="logo.png" alt="Logo VegasBett"/>
+  <h1>¡Bienvenido a VegasBett!</h1>
+  <p>Obtené tu bono del 35% al registrarte y hacer tu primer depósito</p>
+  <a href="#" onclick="sendEvent('ViewContent')">👁️ Ver contenido</a>
+  <button onclick="handleClick('Comprar', 'https://wa.me/5492235931148?text=Quiero%20mi%20bono')">💰 Quiero mi bono</button>
+  <button onclick="handleClick('ClickInfo', 'https://wa.me/5492235931148?text=Quiero%20más%20info')">ℹ️ Quiero más info</button>
+  <button onclick="handleClick('ClickBono', 'https://wa.me/5492233415879?text=Ya%20hice%20mi%20carga,%20acá%20envío%20el%20comprobante')">✅ Ya hice mi carga</button>
 
   <script>
-    // Registro en Sheets
-    function registrarClick(boton) {
-      const ua = navigator.userAgent;
-      const origen = window.location.hostname;
-      const url = "https://script.google.com/macros/s/AKfycbzusjso6SkzyHIKOMwz7Q_ovb5e37ZlAm32FgM5lraF4wBsil_9vVhTCiNcoT8Vfw84/exec";
-      fetch(`${url}?boton=${boton}&ua=${encodeURIComponent(ua)}&origen=${origen}`)
-        .then(response => console.log("Registrado en Sheets"))
-        .catch(error => console.error("Error al registrar:", error));
-    }
+    const access_token = "EAAKMYNrmVAABO4W1vV22UcDVW2OeOHZBqsAjyzxl8fd7kiq7QXzRvWyL7D4buNpxfIb8ZCHjx26ueZAjPZBYO4UMXSo1yKKGFZAZCl8iuVZC2V9IQw5qdj3hYZBKwMtpwz3begVlS413FzKPiEruKoXbmhP3XkH19SaRZBNTmfB0cnUW3IjtV4Jvsn3JEMcB4VDDfPAZDZD";
+    const pixel_id = "1940802446747600";
+    const excel_url = "https://script.google.com/macros/s/AKfycbyjK1p7OzkBPpzkUNrhXCoRhNy7zupIBg__NwUgt6yLnGvxnS9kBIWxXAbGRQkw0zV6Fw/exec";
 
-    // Eventos de API Conversiones
-    const accessToken = "EAAKMYNrmVAABO4W1vV22UcDVW2OeOHZBqsAjyzxl8fd7kiq7QXzRvWyL7D4buNpxfIb8ZCHjx26ueZAjPZBYO4UMXSo1yKKGFZAZCl8iuVZC2V9IQw5qdj3hYZBKwMtpwz3begVlS413FzKPiEruKoXbmhP3XkH19SaRZBNTmfB0cnUW3IjtV4Jvsn3JEMcB4VDDfPAZDZD";
-    const pixelId = "1940802446747600";
-    const endpoint = `https://graph.facebook.com/v19.0/${pixelId}/events?access_token=${accessToken}`;
-
-    function enviarEvento(eventName) {
-      const data = {
-        data: JSON.stringify([{
-          event_name: eventName,
-          event_time: Math.floor(Date.now() / 1000),
-          action_source: "website",
-          event_source_url: window.location.href,
-          user_data: {
-            client_user_agent: navigator.userAgent
-          }
-        }])
-      };
-      fetch(endpoint, {
+    function sendEvent(event_name) {
+      fetch(`https://graph.facebook.com/v19.0/${pixel_id}/events?access_token=${access_token}`, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify(data)
-      })
-      .then(res => console.log("Evento API enviado:", eventName))
-      .catch(err => console.error("Error al enviar API:", err));
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          data: [{
+            event_name,
+            event_time: Math.floor(Date.now() / 1000),
+            event_source_url: window.location.href,
+            action_source: "website",
+            user_data: {
+              client_user_agent: navigator.userAgent,
+              client_ip_address: ""
+            }
+          }]
+        })
+      });
     }
 
-    // Eventos automáticos
-    enviarEvento("PageView");
+    function registerExcel(evento) {
+      fetch(excel_url + "?evento=" + evento)
+        .then(res => console.log("Registrado en Excel"))
+        .catch(err => console.error("Error en Excel", err));
+    }
+
+    function handleClick(evento, link) {
+      sendEvent(evento);
+      registerExcel(evento);
+      setTimeout(() => {
+        window.location.href = link;
+      }, 500);
+    }
+
+    window.addEventListener("load", () => {
+      sendEvent("PageView");
+    });
   </script>
 </body>
 </html>
-
