@@ -3,99 +3,103 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>VegasBett</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VegasBett - Jugá Seguro</title>
   <style>
     body {
       font-family: sans-serif;
-      background-color: #37004b;
+      background-color: #230033;
       color: white;
       text-align: center;
-      padding: 2rem;
-    }
-    img {
-      max-width: 250px;
+      padding: 20px;
     }
     h1 {
-      font-size: 2rem;
-      color: #FFD700;
-    }
-    p {
-      font-size: 1.2rem;
+      color: #fff;
     }
     .button {
       display: block;
       width: 80%;
-      max-width: 300px;
-      margin: 1rem auto;
-      padding: 1rem;
-      font-size: 1.2rem;
-      background-color: #FFD700;
-      color: #37004b;
-      text-decoration: none;
+      max-width: 400px;
+      margin: 10px auto;
+      padding: 20px;
+      font-size: 1.5rem;
+      background-color: #ffd700;
+      color: #230033;
+      border: none;
       border-radius: 10px;
-      font-weight: bold;
+      text-decoration: none;
     }
-    footer {
-      margin-top: 2rem;
-      font-size: 0.8rem;
+    #logo {
+      width: 200px;
+      margin: 20px auto;
+    }
+    .link-text {
+      color: #ffcc00;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      display: inline-block;
     }
   </style>
-  <!-- Meta Pixel Code -->
   <script>
-  !function(f,b,e,v,n,t,s)
-  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-  n.queue=[];t=b.createElement(e);t.async=!0;
-  t.src=v;s=b.getElementsByTagName(e)[0];
-  s.parentNode.insertBefore(t,s)}(window, document,'script',
-  'https://connect.facebook.net/en_US/fbevents.js');
-  fbq('init', '1940802446747600');
-  fbq('track', 'PageView');
-  </script>
-  <noscript><img height="1" width="1" style="display:none"
-  src="https://www.facebook.com/tr?id=1940802446747600&ev=PageView&noscript=1"
-  /></noscript>
-</head>
-<body>
-  <img src="logo.png" alt="Logo VegasBett" />
-  <h1>Bienvenido a VegasBett</h1>
-  <p>Obtené tu <strong>bono del 35%</strong> en tu primera carga.<br>¡Que la suerte esté de tu lado! 🎲✨</p>
+    // Enviar evento a Meta API
+    function sendConversion(eventName) {
+      fetch("https://api.ganamos.link/event", {
+        method: "POST",
+        body: JSON.stringify({
+          event_name: eventName,
+          pixel_id: "1940802446747600",
+          event_source_url: window.location.href,
+        }),
+        headers: { "Content-Type": "application/json" },
+      })
+      .then(res => console.log("Evento API enviado:", eventName))
+      .catch(err => console.error("Error evento API:", err));
+    }
 
-  <a class="button" href="https://wa.me/5492235931148?text=Hola,%20quiero%20mi%20BONO" onclick="registrarClick('ClickBono')">💰 Quiero mi bono</a>
-  <a class="button" href="https://wa.me/5492235931148?text=Quiero%20más%20info" onclick="registrarClick('ClickInfo')">ℹ️ Quiero más info</a>
-  <a class="button" href="https://wa.me/5492233415879?text=Hola,%20ya%20hice%20la%20carga.%20Te%20env%C3%ADo%20el%20comprobante.%20✅🎰" onclick="registrarClick('YaCargue')">✅ Ya hice mi carga</a>
-
-  <footer>
-    <p>Todos los derechos reservados Spark Publicidad</p>
-    <p>✅ Verificado por WhatsApp</p>
-  </footer>
-
-  <script>
-    function registrarClick(boton) {
-      const ua = navigator.userAgent;
-      const origen = window.location.hostname;
-      const endpoint = "https://script.google.com/macros/s/AKfycbzusjso6SkzyHIKOMwz7Q_ovb5e37ZlAm32FgM5lraF4wBsil_9vVhTCiNcoT8Vfw84/exec";
-      const data = {
-        boton: boton,
-        ua: ua,
-        origen: origen
-      };
-      fetch(endpoint + "?" + new URLSearchParams(data))
-        .then(res => console.log("Registro en Sheets:", boton))
-        .catch(err => console.error("Error al registrar en Sheets", err));
-
-      // Eventos de conversión por API
-      if (typeof fbq !== 'undefined') {
-        fbq('track', 'Lead');
-        fbq('track', 'Contact');
-        fbq('track', 'ViewContent');
-        if (boton === 'YaCargue') {
-          fbq('track', 'Purchase', {currency: 'ARS', value: 100.00});
-        }
+    function handleClick(action) {
+      switch(action) {
+        case 'bono':
+          sendConversion("ClickBono");
+          window.location.href = "https://wa.me/5492235931148?text=Hola!%20Quiero%20mi%20bono%20de%20VegasBett";
+          break;
+        case 'info':
+          sendConversion("ClickInfo");
+          window.location.href = "https://wa.me/5492235931148?text=Hola!%20Quiero%20más%20info%20sobre%20VegasBett";
+          break;
+        case 'carga':
+          sendConversion("Comprar");
+          window.location.href = "https://wa.me/5492233415879?text=Ya%20hice%20mi%20carga,%20ahí%20te%20envío%20el%20comprobante";
+          registrarEnExcel();
+          break;
+        case 'verContenido':
+          sendConversion("ViewContent");
+          window.location.href = "https://ganamos.biz";
+          break;
       }
     }
+
+    function registrarEnExcel() {
+      const endpoint = "https://api.ganamos.link/registro";
+      const data = { sitio: "VegasBett", evento: "CargaConfirmada" };
+      fetch(endpoint + "?" + new URLSearchParams(data))
+        .then(res => console.log("Registrado en Sheets"))
+        .catch(err => console.error("Error Sheets", err));
+    }
+
+    window.addEventListener('load', () => {
+      sendConversion("PageView");
+    });
   </script>
+</head>
+<body>
+  <img id="logo" src="logo.png" alt="VegasBett Logo" />
+  <h1>🎰 ¡Bienvenido a VegasBett!</h1>
+  <p>Obtené tu bono del 35% al registrarte y hacer tu primer depósito</p>
+  <a href="#" class="link-text" onclick="handleClick('verContenido')">👁️ Ver contenido</a>
+
+  <a href="#" class="button" onclick="handleClick('bono')">💰 Quiero mi bono</a>
+  <a href="#" class="button" onclick="handleClick('info')">ℹ️ Quiero más info</a>
+  <a href="#" class="button" onclick="handleClick('carga')">✅ Ya hice mi carga</a>
 </body>
 </html>
+
