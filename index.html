@@ -1,81 +1,90 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>VegasBett - Bono del 35%</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VegasBett</title>
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
   <script>
-    // Pixel Meta (colocar el que corresponda si hace falta)
-    !function(f,b,e,v,n,t,s){
-      if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)
-    }(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    // METAPIXEL
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
     fbq('init', '1940802446747600');
     fbq('track', 'PageView');
-
-    function sendEvent(eventName) {
-      const endpoint = 'https://script.google.com/macros/s/AKfycbzyUts6KDgl2pQhM3jHRGQwSToKdy2TeVX0nExI9ZdnU3H8YMNlULAZqvb0ACsKOj3h/exec';
-      const data = {
-        evento: eventName,
-        navegador: navigator.userAgent,
-        origen: window.location.href
-      };
-      fetch(endpoint + "?" + new URLSearchParams(data))
-        .then(res => console.log("Evento enviado por API:", eventName))
-        .catch(err => console.error("Error enviando evento API", err));
-    }
   </script>
   <style>
     body {
       background-color: #25003e;
       color: white;
+      font-family: Arial, sans-serif;
       text-align: center;
-      font-family: sans-serif;
-      padding: 30px;
+      padding: 20px;
     }
-    img {
-      max-width: 220px;
-      margin-bottom: 20px;
+    img.logo {
+      width: 200px;
+      margin: 0 auto 20px;
     }
-    button {
-      background-color: gold;
+    h1 { font-size: 2em; margin-bottom: 10px; }
+    p { font-size: 1.2em; margin-bottom: 20px; }
+    a.button {
+      display: block;
+      background: gold;
       color: black;
-      font-size: 1.3em;
-      padding: 15px 25px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      margin: 10px;
-    }
-    a {
-      color: gold;
       font-weight: bold;
-      text-decoration: underline;
+      margin: 15px auto;
+      padding: 15px;
+      width: 80%;
+      border-radius: 10px;
+      text-decoration: none;
+    }
+    a.link-secundario {
+      color: gold;
+      display: inline-block;
+      margin-bottom: 30px;
     }
   </style>
 </head>
 <body>
-  <img src="logo.png" alt="VegasBett Logo" />
-  <h1>🎰 ¡Bienvenido a VegasBett!</h1>
+  <img src="logo.png" alt="VegasBett" class="logo">
+  <h1>🎰 ¡Bienvenido a VegasBett! 🎰</h1>
   <p>Obtené tu bono del 35% al registrarte y hacer tu primer depósito</p>
 
-  <p><a href="https://ganamos.biz" target="_blank" onclick="fbq('track', 'ViewContent'); sendEvent('ViewContent')">👁️ Ver contenido</a></p>
+  <a href="https://ganamos.biz" class="link-secundario">👁️ Ver contenido</a>
 
-  <button onclick="fbq('track', 'ClickBono'); sendEvent('ClickBono'); window.location.href='https://wa.link/ihv8fi';">
-    💰 Quiero mi bono
-  </button>
-  <br>
-  <button onclick="fbq('track', 'ClickInfo'); sendEvent('ClickInfo'); window.location.href='https://wa.link/ihv8fi';">
-    ℹ️ Quiero más info
-  </button>
-  <br>
-  <button onclick="fbq('track', 'Comprar', {value: 100.00, currency: 'ARS'}); sendEvent('Comprar'); window.location.href='https://wa.me/5492233415879?text=Hola!%20Ya%20hice%20mi%20dep%C3%B3sito%20y%20quiero%20empezar%20a%20jugar%20%F0%9F%8E%B2%F0%9F%92%B0';">
-    ✅ Ya hice mi carga
-  </button>
+  <a href="https://wa.link/ihv8fi" class="button" onclick="trackClick('ClickBono')">💰 Quiero mi bono</a>
+  <a href="https://wa.link/ihv8fi" class="button" onclick="trackClick('ClickInfo')">ℹ️ Quiero más info</a>
+  <a href="#" class="button" onclick="confirmCarga()">✅ Ya hice mi carga</a>
+
+  <script>
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbyzjJzDhKxHRuGy_YQ10STScB7XGVgU_lBRC8nHliHdKSuhgLFF4deLzBdTjRS_aLaE/exec';
+
+    function trackClick(evento) {
+      fbq('track', 'Lead');
+      sendToSheet(evento);
+    }
+
+    function confirmCarga() {
+      fbq('track', 'Contact');
+      sendToSheet('YaCargue');
+      window.location.href = 'https://wa.link/ihv8fi';
+    }
+
+    function sendToSheet(tipo) {
+      const params = new URLSearchParams({
+        tipo: tipo,
+        ua: navigator.userAgent,
+        origen: window.location.hostname
+      });
+
+      fetch(scriptURL + "?" + params.toString())
+        .then(res => console.log("Enviado: ", tipo))
+        .catch(err => console.error("Error de registro", err));
+    }
+  </script>
 </body>
 </html>
