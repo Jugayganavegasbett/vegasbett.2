@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,15 +9,15 @@
     body { background: #23003a; color: white; text-align: center; font-family: sans-serif; }
     button { background: gold; color: black; font-size: 20px; padding: 15px; margin: 10px; border: none; border-radius: 10px; cursor: pointer; display: block; width: 80%; max-width: 300px; margin: 10px auto; }
     img { width: 200px; margin: 20px auto; display: block; }
-    a { color: gold; text-decoration: underline; }
-    footer { margin-top: 40px; font-size: 0.9rem; color: #ccc; }
+    a { color: gold; text-decoration: underline; display: block; margin-bottom: 10px; }
+    footer { margin-top: 2rem; font-size: 0.8rem; color: #ccc; }
   </style>
 </head>
 <body>
   <img src="logo.png" alt="Logo VegasBett"/>
   <h1>¡Bienvenido a VegasBett!</h1>
   <p>Obtené tu bono del 35% al registrarte y hacer tu primer depósito</p>
-  <a href="https://ganamos.biz" onclick="sendEvent('ViewContent')">👁️ Ver contenido</a>
+  <a href="#" onclick="sendEvent('ViewContent'); window.location.href='https://ganamos.biz';">👁️ Ver contenido</a>
   <button onclick="handleClick('Comprar', 'https://wa.me/5492235931148?text=Quiero%20mi%20bono')">💰 Quiero mi bono</button>
   <button onclick="handleClick('ClickInfo', 'https://wa.me/5492235931148?text=Quiero%20más%20info')">ℹ️ Quiero más info</button>
   <button onclick="handleClick('ClickBono', 'https://wa.me/5492233415879?text=Ya%20hice%20mi%20carga,%20acá%20envío%20el%20comprobante')">✅ Ya hice mi carga</button>
@@ -42,8 +43,7 @@
             event_source_url: window.location.href,
             action_source: "website",
             user_data: {
-              client_user_agent: navigator.userAgent,
-              client_ip_address: ""
+              client_user_agent: navigator.userAgent
             }
           }]
         })
@@ -52,7 +52,7 @@
 
     function registerExcel(evento) {
       fetch(excel_url + "?evento=" + evento)
-        .then(res => console.log("Registrado en Excel"))
+        .then(res => console.log("Registrado en Excel:", evento))
         .catch(err => console.error("Error en Excel", err));
     }
 
