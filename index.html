@@ -51,7 +51,12 @@
     }
 
     function registerExcel(evento) {
-      fetch(excel_url + "?evento=" + evento)
+      const params = new URLSearchParams({
+        boton: evento,
+        ua: navigator.userAgent,
+        origen: window.location.href
+      });
+      fetch(excel_url + "?" + params.toString())
         .then(res => console.log("Registrado en Excel:", evento))
         .catch(err => console.error("Error en Excel", err));
     }
