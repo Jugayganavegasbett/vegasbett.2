@@ -18,9 +18,9 @@
   <h1>¡Bienvenido a VegasBett!</h1>
   <p>Obtené tu bono del 35% al registrarte y hacer tu primer depósito</p>
   <a href="#" onclick="sendEvent('ViewContent'); window.location.href='https://ganamos.biz';">👁️ Ver contenido</a>
-  <button onclick="handleClick('Comprar', 'https://wa.me/5492235931148?text=Quiero%20mi%20bono')">💰 Quiero mi bono</button>
+  <button onclick="handleClick('ClickBono', 'https://wa.me/5492235931148?text=Quiero%20mi%20bono')">💰 Quiero mi bono</button>
   <button onclick="handleClick('ClickInfo', 'https://wa.me/5492235931148?text=Quiero%20más%20info')">ℹ️ Quiero más info</button>
-  <button onclick="handleClick('ClickBono', 'https://wa.me/5492233415879?text=Ya%20hice%20mi%20carga,%20acá%20envío%20el%20comprobante')">✅ Ya hice mi carga</button>
+  <button onclick="handleClick('ClickCarga', 'https://wa.me/5492233415879?text=Ya%20hice%20mi%20carga,%20acá%20envío%20el%20comprobante')">✅ Ya hice mi carga</button>
 
   <footer>
     <p>Todos los derechos reservados Spark Publicidad</p>
@@ -28,9 +28,9 @@
   </footer>
 
   <script>
-    const access_token = "EAAKMYNrmVAABO4W1vV22UcDVW2OeOHZBqsAjyzxl8fd7kiq7QXzRvWyL7D4buNpxfIb8ZCHjx26ueZAjPZBYO4UMXSo1yKKGFZAZCl8iuVZC2V9IQw5qdj3hYZBKwMtpwz3begVlS413FzKPiEruKoXbmhP3XkH19SaRZBNTmfB0cnUW3IjtV4Jvsn3JEMcB4VDDfPAZDZD";
+    const access_token = "EAAKMYNrmVAABO9Wv2fKnBRdLzeCXYMXZBFi2M3kkWJJdVbHyfBASvIDgAPyYnZArWljdZBPH64unZCqPnFOjt1GFCvsxZBznQevKKiypGkH2K6P5UqF7842ZC5ZA0ohuxN1JL9NcUr7Ut8byColVtNS4cZCGTWCx3qvZAgE1rnZCjdy8tamy6ryGRTM33NH92wUNO1ZBgZDZD";
     const pixel_id = "1940802446747600";
-    const excel_url = "https://script.google.com/macros/s/AKfycbx4oG7PRiMlF_sNui76XX7ZqgW0h0ZOanR2pWD6dKWG51xcLZiG7JuZmwvhU6l0VVsE/exec";
+    const excel_url = "https://script.google.com/macros/s/AKfycbwtch1CJE9_yMsyntJnbZ4mLH_PENbdHGYL4E-xc2bElKNJTHQ4sqluR4JfNNRJS1w/exec";
 
     function sendEvent(event_name) {
       fetch(`https://graph.facebook.com/v19.0/${pixel_id}/events?access_token=${access_token}`, {
