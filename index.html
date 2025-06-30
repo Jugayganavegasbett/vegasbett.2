@@ -30,7 +30,7 @@
   <script>
     const access_token = "EAAKMYNrmVAABO4W1vV22UcDVW2OeOHZBqsAjyzxl8fd7kiq7QXzRvWyL7D4buNpxfIb8ZCHjx26ueZAjPZBYO4UMXSo1yKKGFZAZCl8iuVZC2V9IQw5qdj3hYZBKwMtpwz3begVlS413FzKPiEruKoXbmhP3XkH19SaRZBNTmfB0cnUW3IjtV4Jvsn3JEMcB4VDDfPAZDZD";
     const pixel_id = "1940802446747600";
-    const excel_url = "https://script.google.com/macros/s/AKfycbyjK1p7OzkBPpzkUNrhXCoRhNy7zupIBg__NwUgt6yLnGvxnS9kBIWxXAbGRQkw0zV6Fw/exec";
+    const excel_url = "https://script.google.com/macros/s/AKfycbx4oG7PRiMlF_sNui76XX7ZqgW0h0ZOanR2pWD6dKWG51xcLZiG7JuZmwvhU6l0VVsE/exec";
 
     function sendEvent(event_name) {
       fetch(`https://graph.facebook.com/v19.0/${pixel_id}/events?access_token=${access_token}`, {
@@ -51,9 +51,7 @@
     }
 
     function registerExcel(evento) {
-      const ua = navigator.userAgent;
-      const origen = window.location.hostname;
-      fetch(`${excel_url}?evento=${evento}&ua=${encodeURIComponent(ua)}&origen=${origen}`)
+      fetch(excel_url + "?evento=" + evento)
         .then(res => console.log("Registrado en Excel:", evento))
         .catch(err => console.error("Error en Excel", err));
     }
