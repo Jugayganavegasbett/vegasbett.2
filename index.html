@@ -5,79 +5,87 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VegasBett</title>
+
+  <!-- Meta Pixel Code -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1940802446747600');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1940802446747600&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Meta Pixel Code -->
+
   <style>
-    body { background: #23003a; color: white; text-align: center; font-family: sans-serif; }
-    button { background: gold; color: black; font-size: 20px; padding: 15px; margin: 10px; border: none; border-radius: 10px; cursor: pointer; display: block; width: 80%; max-width: 300px; margin: 10px auto; }
-    img { width: 200px; margin: 20px auto; display: block; }
-    a { color: gold; text-decoration: underline; display: block; margin-bottom: 10px; }
-    footer { margin-top: 2rem; font-size: 0.8rem; color: #ccc; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to bottom, #1c0033, #3b0066);
+      color: #fff;
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: auto;
+    }
+
+    img.logo {
+      width: 200px;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #FFD700;
+      margin-bottom: 20px;
+    }
+
+    a.btn {
+      display: inline-block;
+      padding: 15px 30px;
+      background-color: #25D366;
+      color: #000;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 30px;
+      transition: background-color 0.3s;
+    }
+
+    a.btn:hover {
+      background-color: #1ebe5d;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 13px;
+      color: #ccc;
+    }
   </style>
 </head>
 <body>
-  <img src="logo.png" alt="Logo VegasBett"/>
-  <h1>¡Bienvenido a VegasBett!</h1>
-  <p>Obtené tu bono del 35% al registrarte y hacer tu primer depósito</p>
-  <a href="#" onclick="sendEvent('ViewContent'); window.location.href='https://ganamos.biz';">👁️ Ver contenido</a>
-  <button onclick="handleClick('Purchase', 'https://wa.me/5492235931148?text=Quiero%20mi%20bono')">💰 Quiero mi bono</button>
-  <button onclick="handleClick('Lead', 'https://wa.me/5492235931148?text=Quiero%20más%20info')">ℹ️ Quiero más info</button>
-  <button onclick="handleClick('Contact', 'https://wa.me/5492233415879?text=Ya%20hice%20mi%20carga,%20acá%20envío%20el%20comprobante')">✅ Ya hice mi carga</button>
-
-  <footer>
-    <p>Todos los derechos reservados Spark Publicidad</p>
-    <p>✅ Verificado por WhatsApp</p>
-  </footer>
-
-  <script>
-    const access_token = "EAAKMYNrmVAABO9Wv2fKnBRdLzeCXYMXZBFi2M3kkWJJdVbHyfBASvIDgAPyYnZArWljdZBPH64unZCqPnFOjt1GFCvsxZBznQevKKiypGkH2K6P5UqF7842ZC5ZA0ohuxN1JL9NcUr7Ut8byColVtNS4cZCGTWCx3qvZAgE1rnZCjdy8tamy6ryGRTM33NH92wUNO1ZBgZDZD";
-    const pixel_id = "1940802446747600";
-    const excel_url = "https://script.google.com/macros/s/AKfycbwtch1CJE9_yMsyntJnbZ4mLH_PENbdHGYL4E-xc2bElKNJTHQ4sqluR4JfNNRJS1w/exec";
-
-    function sendEvent(event_name) {
-      let data = {
-        event_name: event_name,
-        event_time: Math.floor(Date.now() / 1000),
-        event_source_url: window.location.href,
-        action_source: "website",
-        user_data: {
-          client_user_agent: navigator.userAgent
-        }
-      };
-      if (event_name === "Purchase" || event_name === "Contact") {
-        data.custom_data = {
-          value: 100.00,
-          currency: "ARS"
-        };
-      }
-
-      fetch(`https://graph.facebook.com/v19.0/${pixel_id}/events?access_token=${access_token}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: [data] })
-      });
-    }
-
-    function registerExcel(evento) {
-      const params = new URLSearchParams({
-        boton: evento,
-        ua: navigator.userAgent,
-        origen: window.location.href
-      });
-      fetch(excel_url + "?" + params.toString())
-        .then(res => console.log("Registrado en Excel:", evento))
-        .catch(err => console.error("Error en Excel", err));
-    }
-
-    function handleClick(evento, link) {
-      sendEvent(evento);
-      registerExcel(evento);
-      setTimeout(() => {
-        window.location.href = link;
-      }, 500);
-    }
-
-    window.addEventListener("load", () => {
-      sendEvent("PageView");
-    });
-  </script>
+  <div class="container">
+    <img src="logo.png" alt="VegasBett" class="logo" />
+    <h1>Obtené tu bono de bienvenida del 35%</h1>
+    <a href="https://wa.me/5492235931148?text=Quiero%20mi%20bono" class="btn"
+       onclick="fbq('track', 'Purchase', {value: 100.0, currency: 'ARS'});">
+       Quiero mi bono
+    </a>
+    <footer>
+      <p>✅ Verificado por WhatsApp</p>
+      <p>© Todos los derechos reservados - Sparkpublicidades</p>
+    </footer>
+  </div>
 </body>
 </html>
