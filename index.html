@@ -78,8 +78,7 @@
   <div class="container">
     <img src="logo.png" alt="VegasBett" class="logo" />
     <h1>Obtené tu bono de bienvenida del 35%</h1>
-    <a href="https://wa.me/5492235990553?text=Quiero%20mi%20bono" class="btn"
-       onclick='fbq("track", "Purchase", {"value":100.00, "currency":"ARS"});'>
+    <a href="#" class="btn" onclick="registrarClick(); return false;">
        Quiero mi bono
     </a>
 
@@ -106,10 +105,10 @@
       <p>© Todos los derechos reservados - Sparkpublicidades</p>
     </footer>
   </div>
-  
-  <!-- Script para registrar evento en Google Sheets -->
+
+  <!-- Script para registrar evento en Google Sheets y redirigir -->
   <script>
-    function registrarEvento(nombreEvento) {
+    function registrarClick() {
       fetch("https://script.google.com/macros/s/AKfycbyNQW2E5rWZp4aI7L10o8udVh4rGUpNEAMcaYDaoES8VfXQ0BTmPPjNs4xZkX_hBsPe/exec", {
         method: "POST",
         mode: "no-cors",
@@ -117,11 +116,15 @@
           "Content-Type": "application/json"
         },
         body: JSON.stringify({
-          evento: nombreEvento,
+          evento: "ClickFicha",
           fuente: "vegasbett1",
           campaña: "landing-metodospago"
         })
       });
+      fbq("track", "Purchase", {"value":100.00, "currency":"ARS"});
+      setTimeout(function() {
+        window.location.href = "https://wa.me/5492235990553?text=Quiero%20mi%20bono";
+      }, 400);
     }
   </script>
 </body>
