@@ -108,24 +108,19 @@
 
   <!-- Script para registrar evento en Google Sheets y redirigir -->
   <script>
-    function registrarClick() {
-      fetch("https://script.google.com/macros/s/AKfycbyNQW2E5rWZp4aI7L10o8udVh4rGUpNEAMcaYDaoES8VfXQ0BTmPPjNs4xZkX_hBsPe/exec", {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          evento: "ClickFicha",
-          fuente: "vegasbett1",
-          campaña: "landing-metodospago"
-        })
-      });
-      fbq("track", "Purchase", {"value":100.00, "currency":"ARS"});
-      setTimeout(function() {
-        window.location.href = "https://wa.me/5492235990553?text=Quiero%20mi%20bono";
-      }, 400);
-    }
+    document.getElementById("bonoBtn").addEventListener("click", function(event) {
+      event.preventDefault();
+      const url = "https://script.google.com/macros/s/AKfycbyNQW2E5rWZp4aI7L10o8udVh4rGUpNEAMcaYDaoES8VfXQ0BTmPPjNs4xZkX_hBsPe/exec";
+      const data = {
+        evento: "ClickFicha",
+        fuente: "vegasbett1",
+        campaña: "landing-metodospago"
+      };
+
+      navigator.sendBeacon(url, new Blob([JSON.stringify(data)], { type: "application/json" }));
+      fbq("track", "Purchase", {"value": 100.00, "currency": "ARS"});
+      window.location.href = this.href;
+    });
   </script>
 </body>
 </html>
